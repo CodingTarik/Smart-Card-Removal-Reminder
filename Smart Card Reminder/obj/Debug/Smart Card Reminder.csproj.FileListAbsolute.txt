@@ -1,0 +1,9 @@
+C:\Users\Tarik\Source\Repos\Smart Card Reminder\Smart Card Reminder\obj\Debug\Smart_Card_Reminder.Form1.resources
+C:\Users\Tarik\Source\Repos\Smart Card Reminder\Smart Card Reminder\obj\Debug\Smart Card Reminder.csproj.GenerateResource.cache
+C:\Users\Tarik\Source\Repos\Smart Card Reminder\Smart Card Reminder\obj\Debug\Smart Card Reminder.csproj.CoreCompileInputs.cache
+C:\Users\Tarik\Source\Repos\Smart Card Reminder\Smart Card Reminder\bin\Debug\ALERA.exe.config
+C:\Users\Tarik\Source\Repos\Smart Card Reminder\Smart Card Reminder\bin\Debug\ALERA.exe
+C:\Users\Tarik\Source\Repos\Smart Card Reminder\Smart Card Reminder\bin\Debug\ALERA.pdb
+C:\Users\Tarik\Source\Repos\Smart Card Reminder\Smart Card Reminder\obj\Debug\ALERA.exe
+C:\Users\Tarik\Source\Repos\Smart Card Reminder\Smart Card Reminder\obj\Debug\ALERA.pdb
+C:\Users\Tarik\Source\Repos\Smart Card Reminder\Smart Card Reminder\obj\Debug\ALERA.Properties.Resources.resources
