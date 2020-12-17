@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // Allgemeine Informationen über eine Assembly werden über die folgenden
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
-[assembly: AssemblyTitle("ALERA")]
+[assembly: AssemblyTitle("Smart Card Removal Reminder")]
 [assembly: AssemblyDescription("Badge remove reminder")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ALERA")]
+[assembly: AssemblyProduct("Smart Card Removal Reminder")]
 [assembly: AssemblyCopyright("")]
-[assembly: AssemblyTrademark("Raghu380")]
+[assembly: AssemblyTrademark("Cyberta")]
 [assembly: AssemblyCulture("")]
 
 // Durch Festlegen von ComVisible auf FALSE werden die Typen in dieser Assembly
