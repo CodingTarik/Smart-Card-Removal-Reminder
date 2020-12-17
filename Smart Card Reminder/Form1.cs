@@ -19,6 +19,7 @@ namespace Smart_Card_Reminder
         public Form1()
         {          
             InitializeComponent();
+
             this.Visible = false;
             this.TopMost = true;
             this.SetDesktopLocation(Screen.PrimaryScreen.Bounds.Width - this.Size.Width, (int)(Screen.PrimaryScreen.Bounds.Height * 0.9) - this.Size.Height);
@@ -30,9 +31,10 @@ namespace Smart_Card_Reminder
         // Startposition of the pictuebox
         private int y;
         // Endposition after the animation
-        private int yEnd = 90;
+        private int yEnd = 100;
         // Speed of animation (lower = faster) 
         private int speed = 20;
+
         /// <summary>
         /// This Method starts the timer for the picture animation
         /// </summary>
@@ -78,7 +80,6 @@ namespace Smart_Card_Reminder
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
         private void ToStartAnimation_Tick(object sender, EventArgs e)
         {
             if (this.pictureBox1.Location.Y > y)
@@ -126,7 +127,11 @@ namespace Smart_Card_Reminder
                     label2.Text = "Please remove your badge";
                     this.Visible = true;
                     Form1.CardIsPresent = true;
-                    startAnimation();
+                    if(!(ToStartAnimation.Enabled || ToEndAnimation.Enabled))
+                    {
+                        startAnimation();
+                    }
+                    
                 }
             }
             else
@@ -218,11 +223,6 @@ namespace Smart_Card_Reminder
             base.OnLoad(e);
         }
 
-
-        private void PictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
         /// <summary>
         ///  Snooze 5 minutes
         /// </summary>
@@ -272,18 +272,12 @@ namespace Smart_Card_Reminder
                 remindActive = true;
                 reminder.Start();
             }
-
         }
         /* Backgroundcolor for Snoze Buttons */
         private Color backcolor = Color.White;
         private void Label4_MouseHover(object sender, EventArgs e)
         {
             label4.BackColor = backcolor;
-        }
-
-        private void Label2_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void Label4_MouseLeave(object sender, EventArgs e)
@@ -309,16 +303,6 @@ namespace Smart_Card_Reminder
         private void Label6_MouseLeave(object sender, EventArgs e)
         {
             label6.BackColor = Color.Transparent;
-        }
-
-        private void Label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
         /// <summary>
         /// Snooze 30 minutes

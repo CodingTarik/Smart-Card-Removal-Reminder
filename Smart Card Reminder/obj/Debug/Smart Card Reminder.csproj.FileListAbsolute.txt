@@ -7,3 +7,13 @@ C:\Users\Tarik\Source\Repos\Smart Card Reminder\Smart Card Reminder\bin\Debug\AL
 C:\Users\Tarik\Source\Repos\Smart Card Reminder\Smart Card Reminder\obj\Debug\ALERA.exe
 C:\Users\Tarik\Source\Repos\Smart Card Reminder\Smart Card Reminder\obj\Debug\ALERA.pdb
 C:\Users\Tarik\Source\Repos\Smart Card Reminder\Smart Card Reminder\obj\Debug\ALERA.Properties.Resources.resources
+D:\Programmierprojekte\Projekte\Smart Card Reminder\Smart Card Reminder\obj\Debug\Smart Card Reminder.csprojAssemblyReference.cache
+D:\Programmierprojekte\Projekte\Smart Card Reminder\Smart Card Reminder\obj\Debug\Smart_Card_Reminder.Form1.resources
+D:\Programmierprojekte\Projekte\Smart Card Reminder\Smart Card Reminder\obj\Debug\ALERA.Properties.Resources.resources
+D:\Programmierprojekte\Projekte\Smart Card Reminder\Smart Card Reminder\obj\Debug\Smart Card Reminder.csproj.GenerateResource.cache
+D:\Programmierprojekte\Projekte\Smart Card Reminder\Smart Card Reminder\obj\Debug\Smart Card Reminder.csproj.CoreCompileInputs.cache
+D:\Programmierprojekte\Projekte\Smart Card Reminder\Smart Card Reminder\bin\Debug\Smart Card Removal Reminder.exe.config
+D:\Programmierprojekte\Projekte\Smart Card Reminder\Smart Card Reminder\bin\Debug\Smart Card Removal Reminder.exe
+D:\Programmierprojekte\Projekte\Smart Card Reminder\Smart Card Reminder\bin\Debug\Smart Card Removal Reminder.pdb
+D:\Programmierprojekte\Projekte\Smart Card Reminder\Smart Card Reminder\obj\Debug\Smart Card Removal Reminder.exe
+D:\Programmierprojekte\Projekte\Smart Card Reminder\Smart Card Reminder\obj\Debug\Smart Card Removal Reminder.pdb

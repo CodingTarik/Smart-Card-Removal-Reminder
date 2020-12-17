@@ -1,96 +1,160 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Smart_Card_Reminder
 {
-    class Smartcard
+    internal class Smartcard
     {
-        private static string log;
-        public static class SmartCardScope
+        /// <summary>
+        /// debug mode
+        /// </summary>
+        private static readonly bool debug = true;
+
+        /// <summary>
+        /// last check for debug value
+        /// </summary>
+        private static DateTime lastCheck;
+
+        /// <summary>
+        /// Returns value if application is in debug mode
+        /// </summary>
+        /// <returns></returns>
+        private static bool GetDebugValue()
         {
-            public static readonly Int32 User = 0;
-            public static readonly Int32 Terminal = 1;
-            public static readonly Int32 System = 2;
+            if (lastCheck == new DateTime())
+            {
+                lastCheck = DateTime.Now;
+                return true;
+            }
+            if ((DateTime.Now - lastCheck).TotalMinutes > 0.3d)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
+        /// <summary>
+        /// Scope for smart card
+        /// </summary>
+        public static class SmartCardScope
+        {
+            public static readonly int User = 0;
+            public static readonly int Terminal = 1;
+            public static readonly int System = 2;
+        }
+
+        /// <summary>
+        /// Smart Card Reader States
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
         public struct SmartCardReaderState
         {
             public string cardReaderString;
             public IntPtr userDataPointer;
-            public UInt32 currentState;
-            public UInt32 eventState;
-            public UInt32 atrLength;
+            public uint currentState;
+            public uint eventState;
+            public uint atrLength;
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 36)]
             public byte[] ATR;
         }
-
+        /// <summary>
+        /// Smartcard Sate
+        /// </summary>
         public static class SmartCardState
         {
-            public static readonly UInt32 Unaware = 0x00000000;
-            public static readonly UInt32 Ignore = 0x00000001;
-            public static readonly UInt32 Changed = 0x00000002;
-            public static readonly UInt32 Unknown = 0x00000004;
-            public static readonly UInt32 Unavailable = 0x00000008;
-            public static readonly UInt32 Empty = 0x00000010;
-            public static readonly UInt32 Present = 0x00000020;
-            public static readonly UInt32 Atrmatch = 0x00000040;
-            public static readonly UInt32 Exclusive = 0x00000080;
-            public static readonly UInt32 Inuse = 0x00000100;
-            public static readonly UInt32 Mute = 0x00000200;
-            public static readonly UInt32 Unpowered = 0x00000400;
+            public static readonly uint Unaware = 0x00000000;
+            public static readonly uint Ignore = 0x00000001;
+            public static readonly uint Changed = 0x00000002;
+            public static readonly uint Unknown = 0x00000004;
+            public static readonly uint Unavailable = 0x00000008;
+            public static readonly uint Empty = 0x00000010;
+            public static readonly uint Present = 0x00000020;
+            public static readonly uint Atrmatch = 0x00000040;
+            public static readonly uint Exclusive = 0x00000080;
+            public static readonly uint Inuse = 0x00000100;
+            public static readonly uint Mute = 0x00000200;
+            public static readonly uint Unpowered = 0x00000400;
         }
 
-        public const int SCARD_S_SUCCESS = 0;
-
+        //public const int SCARD_S_SUCCESS = 0;
         // Defindes the operation scope and returns a new handle for resource manager context
         [DllImport("winscard.dll")]
-        internal static extern int SCardEstablishContext(Int32 dwScope, IntPtr pReserved1, IntPtr pReserved2, out Int32 hContext);
-
+        internal static extern int SCardEstablishContext(int dwScope, IntPtr pReserved1, IntPtr pReserved2, out int hContext);
         // Gets all smart card readers
         [DllImport("winscard.dll", EntryPoint = "SCardListReadersA", CharSet = CharSet.Ansi)]
-        internal static extern int SCardListReaders(Int32 hContext, byte[] cardReaderGroups, byte[] readersBuffer, out UInt32 readersBufferLength);
-
+        internal static extern int SCardListReaders(int hContext, byte[] cardReaderGroups, byte[] readersBuffer, out uint readersBufferLength);
         // Gets status of a smartcard
         [DllImport("winscard.dll")]
-        internal static extern int SCardGetStatusChange(Int32 hContext, UInt32 timeoutMilliseconds, [In, Out] SmartCardReaderState[] readerStates, Int32 readerCount);
+        internal static extern int SCardGetStatusChange(int hContext, uint timeoutMilliseconds, [In, Out] SmartCardReaderState[] readerStates, int readerCount);
 
+        /// <summary>
+        /// Split all readers at \o
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <returns></returns>
         private static List<string> ParseReaderBuffer(byte[] buffer)
         {
-            var str = Encoding.ASCII.GetString(buffer);
-            if (string.IsNullOrEmpty(str)) return new List<string>();
+            string str = Encoding.ASCII.GetString(buffer);
+            if (string.IsNullOrEmpty(str))
+            {
+                return new List<string>();
+            }
+
             return new List<string>(str.Split(new char[] { '\0' }, StringSplitOptions.RemoveEmptyEntries));
         }
 
-        private static bool CheckIfFlagsSet(UInt32 mask, params UInt32[] flagList)
+        /// <summary>
+        /// checks if flag is set
+        /// </summary>
+        /// <param name="mask"></param>
+        /// <param name="flagList"></param>
+        /// <returns></returns>
+        private static bool CheckIfFlagsSet(uint mask, params uint[] flagList)
         {
-            foreach (UInt32 flag in flagList)
+            foreach (uint flag in flagList)
             {
-                if (IsFlagSet(mask, flag)) return true;
+                if (IsFlagSet(mask, flag))
+                {
+                    return true;
+                }
             }
 
             return false;
         }
 
-        private static bool IsFlagSet(UInt32 mask, UInt32 flag)
+        /// <summary>
+        /// check for flag
+        /// </summary>
+        /// <param name="mask"></param>
+        /// <param name="flag"></param>
+        /// <returns></returns>
+        private static bool IsFlagSet(uint mask, uint flag)
         {
             return ((flag & mask) > 0);
         }
 
+        /// <summary>
+        /// Checks if a card is present
+        /// </summary>
+        /// <returns></returns>
         public static bool CardIsPresent()
         {
+            if (debug)
+            {
+                return GetDebugValue();
+            }
             try
             {
                 addLog("******** NEW CARD CHECK ********");
-                int context = 0;
-                //addLog("Return Values: https://docs.microsoft.com/de-de/windows/win32/secauthn/authentication-return-values");
+                //https://docs.microsoft.com/de-de/windows/win32/secauthn/authentication-return-values
                 addLog("Creating smart card handle");
-                var result = SCardEstablishContext(SmartCardScope.User, IntPtr.Zero, IntPtr.Zero, out context);
+                int result = SCardEstablishContext(SmartCardScope.User, IntPtr.Zero, IntPtr.Zero, out int context);
                 addLog("Result: 0x" + result.ToString("X"));
 
                 addLog("Creating buffer for card readers");
@@ -102,17 +166,17 @@ namespace Smart_Card_Reminder
                 addLog("Result: 0x" + result.ToString("X"));
 
                 addLog("Parsing card readers");
-                var readers = ParseReaderBuffer(readerBuffer);
+                List<string> readers = ParseReaderBuffer(readerBuffer);
                 addLog(readers.Count.ToString() + " Card Reader(s) found");
 
                 if (readers.Any())
                 {
                     addLog("Getting reader states");
-                    var readerStates = readers.Select(cardReaderName => new SmartCardReaderState() { cardReaderString = cardReaderName }).ToArray();
+                    SmartCardReaderState[] readerStates = readers.Select(cardReaderName => new SmartCardReaderState() { cardReaderString = cardReaderName }).ToArray();
                     result = SCardGetStatusChange(context, 1000, readerStates, readerStates.Length);
                     addLog("Result: 0x" + result.ToString("X"));
 
-                    readerStates.ToList().ForEach(readerState => addLog(String.Format("Reader: {0}, State: {1}", readerState.cardReaderString,
+                    readerStates.ToList().ForEach(readerState => addLog(string.Format("Reader: {0}, State: {1}", readerState.cardReaderString,
                         CheckIfFlagsSet(readerState.eventState, SmartCardState.Present, SmartCardState.Atrmatch) ? "Card Present" : "Card Absent")));
 
                     // Programm only checks for first reader
@@ -120,23 +184,29 @@ namespace Smart_Card_Reminder
                     {
                         addLog("First card found is present. returning true");
                         return true;
-                    }                  
+                    }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 addLog("An error occured: " + ex.Message);
             }
             addLog("returning false");
             return false;
         }
+
+        /// <summary>
+        /// Logs
+        /// </summary>
+        private static string log;
+
         /// <summary>
         /// This method adds new event messages to the log
         /// </summary>
         /// <param name="message"></param>
         private static void addLog(string message)
         {
-            string logMessage = String.Format("[{0}]: {1}", System.DateTime.Now.ToString("HH:mm:ss"), message);
+            string logMessage = string.Format("[{0}]: {1}", System.DateTime.Now.ToString("HH:mm:ss"), message);
             log += (logMessage + "\r\n");
             Console.WriteLine(logMessage);
         }
