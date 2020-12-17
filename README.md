@@ -5,4 +5,4 @@ The program works only under Windows and the smart card reader function must be 
 
 ## Preview
 
-![]("Assets/smart card gif.gif")
+![](Assets/smart.gif)
