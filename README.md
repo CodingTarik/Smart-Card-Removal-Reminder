@@ -1,4 +1,4 @@
-# Smart Card-Removal Reminder💳
+# Smart Card Removal Reminder💳
 This application runs in the background and reminds you with nice animations to remove your smart card from your smart card reader. You can also choose between pre-set snooze times at which you want to be reminded.
 
 The program works only with Windows and the smart card reader function must be enabled.
